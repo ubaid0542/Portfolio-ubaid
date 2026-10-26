@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ChapterHeading from '@/components/motion/ChapterHeading';
 import { processSteps } from '@/data/skills';
+import { Calendar, CheckCircle2 } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -21,9 +22,8 @@ export default function ProcessChapter() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Draw connecting line
       if (lineRef.current && connectorRef.current) {
-        const length = lineRef.current.getTotalLength?.() || 500;
+        const length = lineRef.current.getTotalLength?.() || 600;
         gsap.set(lineRef.current, { strokeDasharray: length, strokeDashoffset: length });
         gsap.to(lineRef.current, {
           strokeDashoffset: 0,
@@ -36,7 +36,6 @@ export default function ProcessChapter() {
         });
       }
 
-      // Reveal steps
       stepRefs.current.forEach((ref) => {
         if (!ref) return;
         gsap.fromTo(
@@ -54,24 +53,6 @@ export default function ProcessChapter() {
             },
           }
         );
-
-        // Highlight active step
-        const highlight = ref.querySelector('.step-highlight');
-        if (highlight) {
-          gsap.fromTo(
-            highlight,
-            { scaleX: 0 },
-            {
-              scaleX: 1,
-              scrollTrigger: {
-                trigger: ref,
-                start: 'top 65%',
-                end: 'top 50%',
-                scrub: 1,
-              },
-            }
-          );
-        }
       });
     }, sectionRef);
 
@@ -82,39 +63,44 @@ export default function ProcessChapter() {
     <section
       ref={sectionRef}
       data-chapter="6"
-      className="relative overflow-hidden bg-[#FFFDF7] px-6 py-24 md:px-12 md:py-32"
+      className="relative overflow-hidden bg-[#FFFDF7] px-4 py-24 md:px-12 md:py-32"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
 
       <div className="relative mx-auto max-w-5xl">
-        <ChapterHeading number="06" title="How I Build" />
+        <ChapterHeading number="06" title="How I Build For Clients" />
 
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#77746D]">
-          My approach to building websites and web applications. Each project follows 
-          these stages, adapted to the specific requirements and context.
-        </p>
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#171715]/10 pb-6">
+          <p className="max-w-2xl text-base leading-relaxed text-[#77746D]">
+            A predictable, transparent development methodology designed to eliminate surprises, keep timelines tight, and guarantee design-to-code precision.
+          </p>
+
+          <span className="shrink-0 inline-flex items-center gap-1.5 rounded-sm bg-[#171715] px-3 py-1 font-mono text-[9px] uppercase tracking-wider text-[#FFFDF7]">
+            Typical Delivery: 2 — 3 Weeks
+          </span>
+        </div>
 
         <div className="relative mt-16">
-          {/* Connecting line */}
+          {/* Animated Connecting Line */}
           <svg
             ref={connectorRef}
-            className="absolute left-8 top-0 hidden h-full w-2 md:block"
-            viewBox="0 0 4 500"
+            className="absolute left-6 top-0 hidden h-full w-2 md:left-8 md:block pointer-events-none"
+            viewBox="0 0 4 600"
             preserveAspectRatio="none"
             aria-hidden="true"
           >
             <path
               ref={lineRef}
-              d="M2,0 Q4,50 2,100 T2,200 T2,300 T2,400 T2,500"
+              d="M2,0 L2,600"
               stroke="#D94A38"
-              strokeWidth="2"
+              strokeWidth="2.5"
               fill="none"
-              strokeLinecap="round"
+              strokeDasharray="4 4"
             />
           </svg>
 
@@ -126,32 +112,41 @@ export default function ProcessChapter() {
                 className="relative md:pl-20"
               >
                 {/* Step dot */}
-                <div className="absolute left-6 top-6 hidden h-5 w-5 items-center justify-center rounded-full bg-[#D94A38] md:flex shadow-sm">
-                  <span className="text-[9px] font-bold text-white">{step.number}</span>
+                <div className="absolute left-4 top-6 hidden h-7 w-7 items-center justify-center rounded-full bg-[#171715] text-[#F7E84B] md:flex shadow-sm md:left-5">
+                  <span className="font-mono text-xs font-bold">{step.number}</span>
                 </div>
 
-                <div className="relative rounded-sm bg-[#F3F0E8] p-6 shadow-[3px_4px_16px_rgba(0,0,0,0.05)] border border-[#171715]/5">
+                <div className="relative rounded-sm bg-[#F3F0E8] p-6 md:p-8 shadow-[3px_4px_16px_rgba(23,23,21,0.04)] border border-[#171715]/10">
                   {/* Tape */}
-                  <div className="absolute -top-2 right-6">
+                  <div className="absolute -top-2.5 right-8">
                     <div className="h-4 w-12 rounded-[1px] bg-[#E8DFC0]/70 shadow-sm" style={{ transform: 'rotate(-2deg)' }} />
                   </div>
 
-                  {/* Mobile step number */}
-                  <span className="mb-2 inline-block font-mono text-xs font-bold tracking-wider text-[#D94A38] md:hidden">
-                    {step.number}
-                  </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#171715]/10 pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#D94A38]">
+                        STAGE {step.number} · {step.phase}
+                      </span>
+                    </div>
 
-                  <h3 className="relative inline-block text-xl font-bold tracking-tight text-[#171715]">
+                    <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#77746D]">
+                      <Calendar size={12} className="text-[#D94A38]" />
+                      <span>{step.timeline}</span>
+                    </div>
+                  </div>
+
+                  <h3 className="mt-3 font-serif text-xl font-bold tracking-tight text-[#171715]">
                     {step.title}
-                    <span
-                      className="step-highlight absolute inset-0 -mx-1 -my-0.5 origin-left bg-[#F7E84B]/30"
-                      style={{ borderRadius: '2px', transformOrigin: 'left' }}
-                    />
                   </h3>
 
-                  <p className="mt-2 text-sm leading-relaxed text-[#77746D]">
+                  <p className="mt-2 text-sm leading-relaxed text-[#171715]">
                     {step.description}
                   </p>
+
+                  <div className="mt-4 pt-3 border-t border-[#171715]/10 flex items-center gap-2 text-xs font-mono text-[#77746D]">
+                    <CheckCircle2 size={13} className="text-[#D94A38] shrink-0" />
+                    <span>Deliverable: <strong className="text-[#171715]">{step.deliverable}</strong></span>
+                  </div>
                 </div>
               </div>
             ))}

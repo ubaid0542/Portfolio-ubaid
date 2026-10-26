@@ -3,6 +3,8 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowDown, Sparkles, Building2, Layers, Code2 } from 'lucide-react';
+import { profile } from '@/data/profile';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -11,153 +13,237 @@ if (typeof window !== 'undefined') {
 export default function OpeningChapter() {
   const sectionRef = useRef<HTMLElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
+  const stampRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLDivElement>(null);
+  const tagListRef = useRef<HTMLDivElement>(null);
+  const ctaGroupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Initial entrance animation
-      const entranceTl = gsap.timeline({ delay: 0.3 });
+      const tl = gsap.timeline({ delay: 0.2 });
 
-      entranceTl
+      tl.fromTo(
+        paperRef.current,
+        { opacity: 0, y: 50, scale: 0.96, rotateZ: -1.5 },
+        { opacity: 1, y: 0, scale: 1, rotateZ: 0, duration: 1.1, ease: 'power3.out' }
+      )
         .fromTo(
-          labelRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
-        )
-        .fromTo(
-          paperRef.current,
-          { opacity: 0, y: 60, scale: 0.95, rotation: -2 },
-          { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 1.2, ease: 'power3.out' },
-          0.2
+          stampRef.current,
+          { opacity: 0, scale: 1.4, rotateZ: 12 },
+          { opacity: 1, scale: 1, rotateZ: 3, duration: 0.5, ease: 'back.out(1.7)' },
+          0.4
         )
         .fromTo(
           headlineRef.current,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
           0.6
         )
         .fromTo(
-          lineRef.current,
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.6, ease: 'power2.inOut' },
-          0.9
+          tagListRef.current?.children || [],
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power2.out' },
+          0.8
         )
         .fromTo(
-          subtitleRef.current,
+          ctaGroupRef.current,
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-          1.1
+          1.0
         );
 
-      // Scroll-driven exit
-      const scrollTl = gsap.timeline({
+      // Scroll-driven camera parallax
+      gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1.5,
+          scrub: 1.2,
         },
-      });
-
-      scrollTl
-        .to(paperRef.current, { y: -80, scale: 0.92, opacity: 0.3, duration: 1 })
-        .to(headlineRef.current, { y: -40, opacity: 0, duration: 0.8 }, 0)
-        .to(subtitleRef.current, { y: -20, opacity: 0, duration: 0.6 }, 0.1);
+      })
+        .to(paperRef.current, { y: -100, scale: 0.94, opacity: 0.25, rotateZ: -1 })
+        .to(stampRef.current, { y: -60, rotateZ: 8 }, 0);
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  const scrollToServices = () => {
+    const el = document.querySelector('[data-chapter="8"]');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToEducation = () => {
+    const el = document.querySelector('[data-chapter="2"]');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section
       ref={sectionRef}
       data-chapter="0"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F3F0E8] px-6"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F3F0E8] px-4 pt-20 pb-16 md:px-8"
     >
-      {/* Background paper texture */}
+      {/* Background paper texture & grain */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
 
-      {/* Chapter label */}
-      <div ref={labelRef} className="absolute left-6 top-8 md:left-12 md:top-12">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#77746D]">
-          Ch. 00 — The Opening
-        </span>
-      </div>
-
-      {/* Main composition */}
-      <div className="relative flex flex-col items-center text-center">
-        {/* Paper card behind headline */}
+      {/* Main Physical Paper Document Canvas */}
+      <div className="relative mx-auto w-full max-w-4xl">
         <div
           ref={paperRef}
-          className="relative rounded-sm bg-[#FFFDF7] px-8 py-12 shadow-[4px_6px_24px_rgba(0,0,0,0.08)] md:px-16 md:py-20"
+          className="relative rounded-sm bg-[#FFFDF7] p-8 md:p-14 lg:p-16 shadow-[6px_10px_35px_rgba(23,23,21,0.09)] border border-[#171715]/10"
         >
-          {/* Paper grain */}
-          <div
-            className="pointer-events-none absolute inset-0 rounded-sm opacity-[0.03]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          {/* Tape on top */}
-          <div className="absolute -top-2.5 left-1/2 -translate-x-1/2">
-            <div className="h-5 w-20 rounded-[1px] bg-[#E8DFC0]/70 shadow-sm" style={{ transform: 'rotate(-1deg)' }} />
+          {/* Masking tape on top center */}
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20">
+            <div
+              className="h-6 w-28 rounded-[1px] bg-[#E8DFC0]/75 shadow-sm border-t border-b border-[#D4CFC2]/40"
+              style={{ transform: 'rotate(-1.5deg)' }}
+            />
           </div>
 
-          <h1
-            ref={headlineRef}
-            className="relative font-serif text-4xl font-black uppercase leading-[1.1] tracking-tight text-[#171715] md:text-6xl lg:text-7xl"
-          >
-            Every website
-            <br />
-            has a{' '}
-            <span className="relative inline-block">
-              story
-              <svg
-                className="absolute -bottom-1 left-0 w-full"
-                viewBox="0 0 200 12"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2,8 Q50,2 100,7 T198,6"
-                  stroke="#D94A38"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-              </svg>
+          {/* Masking tape on bottom right */}
+          <div className="absolute -bottom-3 right-8 z-20 hidden sm:block">
+            <div
+              className="h-5 w-20 rounded-[1px] bg-[#E8DFC0]/70 shadow-sm"
+              style={{ transform: 'rotate(2deg)' }}
+            />
+          </div>
+
+          {/* Top Document Header Metadata */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#171715]/10 pb-5">
+            <div className="flex items-center gap-3">
+              <span className="rounded-sm bg-[#171715] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-[#FFFDF7] font-bold">
+                DOCUMENT 00
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[#77746D]">
+                Interactive Dossier · Varanasi
+              </span>
+            </div>
+
+            {/* Official Stamped Seal (Freelance Primary Highlight) */}
+            <div
+              ref={stampRef}
+              className="inline-flex items-center gap-2 rounded-sm border-2 border-dashed border-[#D94A38] bg-[#FFF5F5] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#D94A38] shadow-sm"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D94A38]" />
+              Available for Freelance Projects
+            </div>
+          </div>
+
+          {/* Main Editorial Headline */}
+          <div className="mt-8 md:mt-12 text-center md:text-left">
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#77746D]">
+              Meet Ubaid — Frontend & Full Stack Developer
             </span>
-            .
-          </h1>
 
-          <div ref={lineRef} className="mx-auto mt-6 h-px w-16 origin-left bg-[#171715]/20" />
+            <h1
+              ref={headlineRef}
+              className="mt-3 font-serif text-3xl font-black leading-[1.15] tracking-tight text-[#171715] sm:text-5xl md:text-6xl lg:text-7xl"
+            >
+              Every website has a{' '}
+              <span className="relative inline-block whitespace-nowrap">
+                story
+                <svg
+                  className="absolute -bottom-2 left-0 w-full"
+                  viewBox="0 0 200 14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3,9 Q55,2 105,8 T197,6"
+                    stroke="#D94A38"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+              .<br className="hidden sm:inline" />
+              Here is how I build them.
+            </h1>
 
-          <p
-            ref={subtitleRef}
-            className="mt-6 font-mono text-sm uppercase tracking-[0.2em] text-[#77746D]"
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#77746D] md:text-lg">
+              {profile.bio}
+            </p>
+          </div>
+
+          {/* Freelance Highlights Specimen Badges */}
+          <div
+            ref={tagListRef}
+            className="mt-8 grid gap-3 sm:grid-cols-3 border-t border-b border-[#171715]/10 py-5"
           >
-            Here&apos;s mine.
-          </p>
-        </div>
+            <div className="flex items-center gap-2.5 rounded-sm bg-[#F3F0E8]/70 p-2.5">
+              <Building2 size={16} className="text-[#D94A38] shrink-0" />
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#171715]">
+                  Real Estate Websites
+                </p>
+                <p className="text-[11px] text-[#77746D]">
+                  Authority & high lead conversion
+                </p>
+              </div>
+            </div>
 
-        {/* Scroll indicator */}
-        <div className="mt-12 flex flex-col items-center gap-2 opacity-60">
-          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#77746D]">
-            Scroll to explore
-          </span>
-          <div className="h-8 w-px bg-[#77746D]/40" />
+            <div className="flex items-center gap-2.5 rounded-sm bg-[#F3F0E8]/70 p-2.5">
+              <Layers size={16} className="text-[#D94A38] shrink-0" />
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#171715]">
+                  Creative 3D & GSAP
+                </p>
+                <p className="text-[11px] text-[#77746D]">
+                  Scroll-choreographed storytelling
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 rounded-sm bg-[#F3F0E8]/70 p-2.5">
+              <Code2 size={16} className="text-[#D94A38] shrink-0" />
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#171715]">
+                  Full-Stack Architecture
+                </p>
+                <p className="text-[11px] text-[#77746D]">
+                  MCA degree · Next.js · Node.js
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick CTA Actions */}
+          <div
+            ref={ctaGroupRef}
+            className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={scrollToServices}
+                className="inline-flex items-center gap-2 rounded-sm bg-[#D94A38] px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#b83827] transition-all hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D94A38]"
+              >
+                <Sparkles size={14} />
+                Explore Freelance Services
+              </button>
+
+              <button
+                onClick={scrollToEducation}
+                className="inline-flex items-center gap-2 rounded-sm border border-[#171715]/20 bg-[#FFFDF7] px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-[#171715] hover:bg-[#171715]/5 transition-colors"
+              >
+                View Education & Skills
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2 text-[#77746D] font-mono text-[11px] uppercase tracking-widest">
+              <span>Scroll to inspect</span>
+              <ArrowDown size={14} className="animate-bounce" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
