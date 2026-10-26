@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { projects } from '@/data/projects';
 import { generateProjectMetadata } from '@/lib/seo';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Globe } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -90,15 +90,30 @@ export default async function ProjectDetailPage({ params }: Props) {
           </p>
 
           {/* Tech stack */}
-          <div className="mt-8 flex flex-wrap gap-2 pt-6 border-t border-[#171715]/10">
-            {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-sm bg-[#171715] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-[#FFFDF7]"
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#171715]/10">
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-sm bg-[#171715] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-[#FFFDF7]"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-sm bg-[#D94A38] px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:bg-[#b83827] transition-all hover:scale-105"
               >
-                {tech}
-              </span>
-            ))}
+                <Globe size={13} />
+                Visit Live Site: {project.liveUrl.replace('https://', '')}
+                <ArrowUpRight size={13} />
+              </a>
+            )}
           </div>
         </header>
 
