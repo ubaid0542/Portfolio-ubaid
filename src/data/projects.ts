@@ -24,7 +24,7 @@ export const projects: Project[] = [
     subtitle: 'SHAPING INDIA',
     category: 'Real Estate Website · Freelance Client',
     description: 'End-to-end engineered freelance website for WALL INFRA — SHAPING INDIA, a premier real estate development company in Varanasi.',
-    longDescription: 'Completed freelance client project engineered end-to-end by Ubaid for WALL INFRA (SHAPING INDIA) in Varanasi. Delivered the entire web presence from concept and design to responsive Next.js frontend development, GSAP animations, performance optimization, and live deployment at wallinfra.com.',
+    longDescription: 'Completed freelance client project engineered end-to-end by Ubaid for WALL INFRA (SHAPING INDIA) in Varanasi. Delivered the entire web presence from concept and design to responsive full-stack Next.js web development, GSAP animations, performance optimization, and live deployment at wallinfra.com.',
     technologies: ['Next.js', 'Tailwind CSS', 'GSAP', 'TypeScript'],
     features: [
       'End-to-end freelance engineering from design to deployment',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
       'Fast performance & Core Web Vitals optimization',
       'SEO-friendly structure for Varanasi real estate visibility',
     ],
-    image: '/images/wall-infra-mockup.png',
+    image: '/images/wallinfra-project.png',
     liveUrl: 'https://wallinfra.com',
     status: 'completed',
   },

@@ -24,6 +24,7 @@ export default function ContactChapter() {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [copiedNotice, setCopiedNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -82,8 +83,19 @@ export default function ContactChapter() {
   };
 
   const openWhatsApp = () => {
-    const text = encodeURIComponent('Hi Ubaid, I saw your portfolio and would like to discuss a freelance project.');
-    window.open(`${profile.social.whatsapp}?text=${text}`, '_blank');
+    window.open(profile.social.whatsapp, '_blank');
+  };
+
+  const handleLinkClick = (label: string) => {
+    if (label === 'LinkedIn') {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        navigator.clipboard.writeText(
+          'Hi Ubaid, I saw your portfolio and would like to discuss a full-stack web development project with you.'
+        );
+        setCopiedNotice('Personalized message copied to clipboard! You can paste it directly into LinkedIn.');
+        setTimeout(() => setCopiedNotice(null), 4500);
+      }
+    }
   };
 
   const contactLinks = [
@@ -93,23 +105,17 @@ export default function ContactChapter() {
       href: profile.social.whatsapp,
       icon: MessageSquare,
       color: 'text-[#128C7E]',
-      note: 'Fastest response (within 2-4 hours)',
-    },
-    {
-      label: 'Direct Phone / Call',
-      value: '+91 8090507639',
-      href: `tel:${profile.social.mobile}`,
-      icon: Phone,
-      color: 'text-emerald-700',
-      note: 'Direct call for urgent inquiries',
+      badge: 'Auto Message',
+      note: 'Pre-filled inquiry: "Hi Ubaid, I saw your portfolio..."',
     },
     {
       label: 'Direct Email',
       value: profile.social.email,
-      href: `mailto:${profile.social.email}`,
+      href: profile.social.prefilledEmail,
       icon: Mail,
       color: 'text-[#D94A38]',
-      note: 'Detailed briefs & project RFPs',
+      badge: 'Auto Draft',
+      note: 'Pre-filled project specification & inquiry template',
     },
     {
       label: 'LinkedIn',
@@ -117,7 +123,17 @@ export default function ContactChapter() {
       href: profile.social.linkedin,
       icon: Linkedin,
       color: 'text-[#0A66C2]',
-      note: 'Professional network & recommendations',
+      badge: 'Auto Copy',
+      note: 'Copies personalized intro message & opens LinkedIn profile',
+    },
+    {
+      label: 'Direct Phone / Call',
+      value: '+91 8090507639',
+      href: `tel:${profile.social.mobile}`,
+      icon: Phone,
+      color: 'text-emerald-700',
+      badge: 'Direct',
+      note: 'Direct voice call for urgent project inquiries',
     },
     {
       label: 'GitHub',
@@ -125,7 +141,8 @@ export default function ContactChapter() {
       href: profile.social.github,
       icon: Github,
       color: 'text-[#171715]',
-      note: 'Open source repositories & experiments',
+      badge: 'Code',
+      note: 'Open source repositories, stars & experiments',
     },
     {
       label: 'Instagram',
@@ -133,6 +150,7 @@ export default function ContactChapter() {
       href: profile.social.instagram,
       icon: Instagram,
       color: 'text-[#E4405F]',
+      badge: 'Social',
       note: 'Personal & creative developer profile',
     },
   ];
@@ -315,9 +333,22 @@ export default function ContactChapter() {
           {/* Direct Communication Channels & Sign-Off */}
           <div className="flex flex-col justify-between lg:col-span-5">
             <div ref={linksRef} className="space-y-3.5">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#77746D] font-bold">
-                Direct Communication Channels
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#77746D] font-bold">
+                  Direct Communication Channels
+                </span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
+                  Pre-filled Messages Ready
+                </span>
+              </div>
+
+              {/* Toast Notice when message copied */}
+              {copiedNotice && (
+                <div className="rounded-sm bg-[#171715] p-3 text-xs font-mono text-[#F7E84B] shadow-lg animate-in fade-in slide-in-from-top-2 border border-[#F7E84B]/30 flex items-center justify-between">
+                  <span>✓ {copiedNotice}</span>
+                  <button onClick={() => setCopiedNotice(null)} className="text-white hover:text-[#D94A38] ml-2">✕</button>
+                </div>
+              )}
 
               {contactLinks.map((link) => {
                 const Icon = link.icon;
@@ -326,20 +357,26 @@ export default function ContactChapter() {
                   <a
                     key={link.label}
                     href={link.href}
+                    onClick={() => handleLinkClick(link.label)}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
                     className="group flex items-center justify-between rounded-sm bg-[#FFFDF7] p-4 shadow-[2px_3px_10px_rgba(23,23,21,0.03)] border border-[#171715]/10 transition-all hover:-translate-y-0.5 hover:shadow-[3px_6px_16px_rgba(23,23,21,0.07)]"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#F3F0E8] text-[#171715] group-hover:bg-[#171715] group-hover:text-white transition-colors">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#F3F0E8] text-[#171715] group-hover:bg-[#171715] group-hover:text-white transition-colors shrink-0">
                         <Icon size={18} className={link.color} />
                       </div>
                       <div>
-                        <p className="font-mono text-xs font-bold text-[#171715]">{link.label}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-mono text-xs font-bold text-[#171715]">{link.label}</p>
+                          <span className="font-mono text-[8px] uppercase tracking-wider text-[#D94A38] bg-[#D94A38]/10 px-1.5 py-0.2 rounded font-semibold">
+                            {link.badge}
+                          </span>
+                        </div>
                         <p className="text-[11px] text-[#77746D]">{link.note}</p>
                       </div>
                     </div>
-                    <ArrowUpRight size={14} className="text-[#77746D] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    <ArrowUpRight size={14} className="text-[#77746D] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0" />
                   </a>
                 );
               })}

@@ -9,7 +9,7 @@ export default function Footer() {
     { label: 'LinkedIn', href: profile.social.linkedin, icon: Linkedin },
     { label: 'Instagram', href: profile.social.instagram, icon: Instagram },
     { label: 'WhatsApp', href: profile.social.whatsapp, icon: MessageSquare },
-    { label: 'Email', href: `mailto:${profile.social.email}`, icon: Mail },
+    { label: 'Email', href: profile.social.prefilledEmail, icon: Mail },
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function Footer() {
               {profile.title} · Varanasi, Uttar Pradesh, India
             </p>
             <p className="mt-1 font-mono text-xs text-[#FFFDF7]/60">
-              MCA Graduate · End-to-End Web Developer
+              MCA Graduate · Full Stack Web Developer
             </p>
           </div>
 

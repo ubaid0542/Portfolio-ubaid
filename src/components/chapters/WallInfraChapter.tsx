@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ChapterHeading from '@/components/motion/ChapterHeading';
@@ -207,55 +208,49 @@ export default function WallInfraChapter() {
             </div>
           </div>
 
-          {/* Browser Content Canvas */}
-          <div className="relative aspect-[16/10] overflow-hidden rounded-b-lg bg-[#141412] p-8 md:p-14 flex flex-col justify-between text-[#FFFDF7]">
-            {/* Paper texture overlay */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.05]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-              }}
+          {/* Browser Content Canvas with Real Wall Infra Screenshot */}
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-b-lg bg-[#141412] shadow-inner" style={{ position: 'relative' }}>
+            <Image
+              src="/images/wallinfra-project.png"
+              alt="WALL INFRA — SHAPING INDIA Live Real Estate Website Interface"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 950px"
+              className="object-cover object-top transition-transform duration-700 hover:scale-[1.02]"
             />
 
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#F7E84B]">
-                <Building2 size={16} />
-                <span>WALL INFRA</span>
-              </div>
-              <span className="rounded-sm bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider border border-emerald-500/30">
-                ● Live Website
+            {/* Hover & Mobile overlay action button */}
+            <a
+              href="https://wallinfra.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Wall Infra live website"
+              className="group absolute inset-0 z-10 flex items-end justify-end p-4 sm:p-6 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-95 sm:opacity-0 hover:opacity-100 transition-opacity"
+            >
+              <span className="inline-flex items-center gap-2 rounded-sm bg-[#D94A38] px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-xl hover:bg-[#b83827] transition-all">
+                <Globe size={13} />
+                Visit Live Site: wallinfra.com
+                <ArrowUpRight size={13} />
+              </span>
+            </a>
+          </div>
+
+          {/* Screenshot Caption Bar */}
+          <div className="rounded-b-sm bg-[#FFFDF7] p-3.5 border-t border-[#171715]/10 flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-[#77746D]">
+                Fig. 01 — WALL INFRA: Shaping India Real Estate Platform (Client: Varanasi, UP)
               </span>
             </div>
-
-            <div className="relative z-10 my-auto text-center md:text-left">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#77746D]">
-                Real Estate Development · Varanasi
-              </span>
-              <h4 className="mt-2 font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FFFDF7]">
-                SHAPING INDIA.
-              </h4>
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#FFFDF7]/75">
-                Full-scale corporate real estate website engineered end-to-end by Ubaid. Featuring property portfolios, corporate vision, and rapid responsive navigation designed to build trust with homebuyers and investors.
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-4">
-                <a
-                  href="https://wallinfra.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-sm bg-[#D94A38] px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#b83827] transition-all hover:scale-105"
-                >
-                  <Globe size={13} />
-                  Open Live Website (wallinfra.com)
-                  <ArrowUpRight size={13} />
-                </a>
-              </div>
-            </div>
-
-            <div className="relative z-10 pt-4 border-t border-[#FFFDF7]/10 flex flex-wrap items-center justify-between text-xs text-[#77746D] font-mono">
-              <span>Client: Wall Infra (Varanasi, UP)</span>
-              <span>Engineering: End-to-End by Ubaid</span>
-            </div>
+            <a
+              href="https://wallinfra.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase tracking-wider text-[#D94A38] font-bold hover:underline flex items-center gap-1"
+            >
+              Launch wallinfra.com ↗
+            </a>
           </div>
         </div>
 

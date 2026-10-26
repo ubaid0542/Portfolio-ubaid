@@ -70,8 +70,7 @@ export default function ServicesChapter() {
   };
 
   const openWhatsApp = () => {
-    const text = encodeURIComponent('Hi Ubaid, I saw your portfolio and would like to discuss a freelance project.');
-    window.open(`${profile.social.whatsapp}?text=${text}`, '_blank');
+    window.open(profile.social.whatsapp, '_blank');
   };
 
   return (

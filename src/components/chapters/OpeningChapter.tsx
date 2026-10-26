@@ -155,7 +155,7 @@ export default function OpeningChapter() {
           {/* Main Editorial Headline */}
           <div className="mt-8 md:mt-12 text-center md:text-left">
             <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#77746D]">
-              Meet Ubaid — Frontend & Full Stack Developer
+              Meet Ubaid — Full Stack Web Developer
             </span>
 
             <h1

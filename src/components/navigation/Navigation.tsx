@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
 import { CHAPTER_LABELS } from '@/lib/animations';
+import { profile } from '@/data/profile';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +69,7 @@ export default function Navigation() {
             </span>
             <span className="hidden md:inline text-[#171715]/30">/</span>
             <span className="hidden md:inline font-mono text-[9px] uppercase tracking-wider text-[#D94A38] font-bold">
-              MCA Developer
+              Full Stack Web Developer
             </span>
           </div>
 
@@ -210,24 +211,26 @@ export default function Navigation() {
                 <ArrowUpRight size={14} />
               </button>
 
-              <div className="mt-4 pt-3 border-t border-[#171715]/10 flex flex-wrap gap-3 font-mono text-[11px]">
-                <a href="https://wa.me/918090507639" target="_blank" rel="noopener noreferrer" className="text-[#128C7E] font-bold hover:underline">
-                  WhatsApp: 8090507639
+              <div className="mt-4 pt-3 border-t border-[#171715]/10 flex flex-col gap-2 font-mono text-[11px]">
+                <a href={profile.social.whatsapp} target="_blank" rel="noopener noreferrer" className="text-[#128C7E] font-bold hover:underline flex items-center justify-between">
+                  <span>WhatsApp: 8090507639</span>
+                  <span className="text-[9px] uppercase tracking-wider text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Pre-filled Chat ↗</span>
                 </a>
-                <a href="mailto:mdubaid8090@gmail.com" className="text-[#171715] hover:text-[#D94A38] hover:underline">
-                  mdubaid8090@gmail.com
+                <a href={profile.social.prefilledEmail} className="text-[#171715] hover:text-[#D94A38] hover:underline flex items-center justify-between">
+                  <span>mdubaid8090@gmail.com</span>
+                  <span className="text-[9px] uppercase tracking-wider text-[#D94A38] bg-red-50 px-1.5 py-0.5 rounded">Pre-filled Draft ↗</span>
                 </a>
               </div>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3 text-xs font-mono text-[#77746D]">
-              <a href="https://github.com/ubaid0542" target="_blank" rel="noopener noreferrer" className="hover:text-[#171715] hover:underline">
+              <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="hover:text-[#171715] hover:underline">
                 GitHub ↗
               </a>
-              <a href="https://www.linkedin.com/in/mdubaid8090" target="_blank" rel="noopener noreferrer" className="hover:text-[#0A66C2] hover:underline">
+              <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#0A66C2] hover:underline">
                 LinkedIn ↗
               </a>
-              <a href="https://instagram.com/ubaidkhan__01" target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] hover:underline">
+              <a href={profile.social.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] hover:underline">
                 Instagram ↗
               </a>
             </div>
@@ -237,7 +240,7 @@ export default function Navigation() {
                 Varanasi, UP, India
               </span>
               <span className="font-mono text-[10px] uppercase tracking-widest font-semibold text-[#D94A38]">
-                MCA Developer
+                Full Stack Web Developer
               </span>
             </div>
           </div>

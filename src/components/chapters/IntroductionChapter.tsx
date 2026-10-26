@@ -94,7 +94,7 @@ export default function IntroductionChapter() {
                 className="absolute -right-3 top-6 z-20"
               >
                 <div className="rounded-sm bg-[#D94A38] px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-white font-bold shadow-md transform rotate-3">
-                  ● Freelance Developer
+                  ● Full Stack Web Developer
                 </div>
               </div>
 
@@ -150,7 +150,7 @@ export default function IntroductionChapter() {
               </h3>
 
               <p className="mt-4 text-base leading-relaxed text-[#171715]">
-                I&apos;m <span className="font-semibold text-[#D94A38]">Ubaid</span>, an MCA graduate and freelance frontend/full-stack developer based in Varanasi. I partner directly with business owners, real estate developers, and marketing agencies to build custom digital properties from scratch.
+                I&apos;m <span className="font-semibold text-[#D94A38]">Ubaid</span>, an MCA graduate and freelance Full Stack Web Developer based in Varanasi. I partner directly with business owners, real estate developers, and marketing agencies to build custom digital properties from scratch.
               </p>
 
               {/* Proven Freelance Track Record Callout Box */}

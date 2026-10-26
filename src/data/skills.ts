@@ -53,7 +53,7 @@ export const skillCategories: SkillCategory[] = [
     label: 'Databases, Cloud & Workflow',
     badge: 'PRODUCTION READY',
     skills: [
-      { name: 'PostgreSQL', level: 'Working Knowledge', usage: 'Relational data modeling, indexing, foreign keys' },
+      { name: 'SQL', level: 'Working Knowledge', usage: 'Relational data modeling, indexing, foreign keys' },
       { name: 'MongoDB', level: 'Proficient', usage: 'Document data stores, flexible schemas, aggregation' },
       { name: 'Git & GitHub', level: 'Advanced', usage: 'Version control, feature branching, release workflows' },
       { name: 'Vercel & CI/CD', level: 'Advanced', usage: 'Automated static edge deployment, CDN caching' },

@@ -12,10 +12,11 @@ export const metadata: Metadata = {
   },
   description: `${profile.name} is a ${profile.title} based in ${profile.location}. Interactive explainer developer portfolio built with modern motion design and thoughtful engineering.`,
   keywords: [
-    'Frontend Developer',
+    'Full Stack Web Developer',
     'Full Stack Developer',
     'Creative Developer',
-    'GSAP Animation',
+    'Freelance Web Developer Varanasi',
+    'GSAP Animation Specialist',
     'Interactive Portfolio',
     'Next.js Developer',
     'Varanasi Developer',

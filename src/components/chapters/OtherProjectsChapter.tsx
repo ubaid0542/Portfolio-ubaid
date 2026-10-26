@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import ChapterHeading from '@/components/motion/ChapterHeading';
 import { projects } from '@/data/projects';
+import { ArrowUpRight, Github } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -151,16 +152,29 @@ export default function OtherProjectsChapter() {
                       ))}
                     </ul>
 
-                    {/* Tech stack */}
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-sm bg-[#171715]/5 border border-[#171715]/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[#171715]"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                    {/* Tech stack & GitHub Link */}
+                    <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-sm bg-[#171715]/5 border border-[#171715]/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[#171715]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <a
+                        href={project.githubUrl || 'https://github.com/ubaid0542'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#171715] hover:text-[#D94A38] transition-colors"
+                      >
+                        <Github size={13} />
+                        <span>Source / Code</span>
+                        <ArrowUpRight size={11} />
+                      </a>
                     </div>
                   </div>
                 </div>
