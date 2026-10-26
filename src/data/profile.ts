@@ -52,10 +52,14 @@ export const profile = {
   ],
 
   social: {
-    email: 'ubaid.dev.work@gmail.com', // Replace with your exact primary email
-    linkedin: 'https://linkedin.com/in/ubaid-dev', // Replace with your LinkedIn profile
-    github: 'https://github.com/ubaid-dev', // Replace with your GitHub profile
-    whatsapp: 'https://wa.me/919999999999', // Replace with your WhatsApp phone number
+    email: 'mdubaid8090@gmail.com',
+    mobile: '8090507639',
+    phone: '+91 8090507639',
+    whatsapp: 'https://wa.me/918090507639',
+    linkedin: 'https://www.linkedin.com/in/mdubaid8090',
+    github: 'https://github.com/ubaid0542',
+    instagram: 'https://instagram.com/ubaidkhan__01',
+    instagramUsername: 'ubaidkhan__01',
   },
 
   siteUrl: 'https://ubaid.dev',

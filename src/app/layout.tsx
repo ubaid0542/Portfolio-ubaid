@@ -87,6 +87,7 @@ export default function RootLayout({
     sameAs: [
       profile.social.github,
       profile.social.linkedin,
+      profile.social.instagram,
     ],
     knowsAbout: [
       'Frontend Development',

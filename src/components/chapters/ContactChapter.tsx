@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ChapterHeading from '@/components/motion/ChapterHeading';
 import { profile } from '@/data/profile';
-import { Mail, Linkedin, Github, MessageSquare, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Mail, Linkedin, Github, MessageSquare, ArrowUpRight, CheckCircle2, Sparkles, Phone, Instagram } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -89,11 +89,19 @@ export default function ContactChapter() {
   const contactLinks = [
     {
       label: 'WhatsApp Quick Chat',
-      value: 'Instant project discussion',
+      value: '+91 8090507639',
       href: profile.social.whatsapp,
       icon: MessageSquare,
       color: 'text-[#128C7E]',
       note: 'Fastest response (within 2-4 hours)',
+    },
+    {
+      label: 'Direct Phone / Call',
+      value: '+91 8090507639',
+      href: `tel:${profile.social.mobile}`,
+      icon: Phone,
+      color: 'text-emerald-700',
+      note: 'Direct call for urgent inquiries',
     },
     {
       label: 'Direct Email',
@@ -101,11 +109,11 @@ export default function ContactChapter() {
       href: `mailto:${profile.social.email}`,
       icon: Mail,
       color: 'text-[#D94A38]',
-      note: 'Detailed briefs & RFPs',
+      note: 'Detailed briefs & project RFPs',
     },
     {
       label: 'LinkedIn',
-      value: 'Ubaid on LinkedIn',
+      value: 'linkedin.com/in/mdubaid8090',
       href: profile.social.linkedin,
       icon: Linkedin,
       color: 'text-[#0A66C2]',
@@ -113,11 +121,19 @@ export default function ContactChapter() {
     },
     {
       label: 'GitHub',
-      value: 'github.com/ubaid-dev',
+      value: 'github.com/ubaid0542',
       href: profile.social.github,
       icon: Github,
       color: 'text-[#171715]',
       note: 'Open source repositories & experiments',
+    },
+    {
+      label: 'Instagram',
+      value: `@${profile.social.instagramUsername}`,
+      href: profile.social.instagram,
+      icon: Instagram,
+      color: 'text-[#E4405F]',
+      note: 'Personal & creative developer profile',
     },
   ];
 

@@ -140,94 +140,109 @@ export default function Navigation() {
         })}
       </aside>
 
-      {/* Fullscreen Navigation Modal Drawer */}
-      <div
-        className={`fixed inset-0 z-50 transition-all duration-300 ${
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-      >
-        <div
-          className="absolute inset-0 bg-[#171715]/80 backdrop-blur-sm transition-opacity"
-          onClick={() => setIsOpen(false)}
-        />
-        <div
-          className={`absolute right-0 top-0 h-full w-full max-w-md bg-[#F3F0E8] p-8 pt-16 shadow-2xl transition-transform duration-300 overflow-y-auto ${
-            isOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <div className="flex items-center justify-between border-b border-[#171715]/10 pb-4">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#D94A38] font-bold">
-                Table of Contents
-              </span>
-              <h3 className="font-serif text-xl font-bold text-[#171715]">
-                Ubaid&apos;s Portfolio Explainer
-              </h3>
+      {/* Fullscreen Navigation Modal Drawer - Only rendered when open to prevent background blur */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 transition-all duration-300 pointer-events-auto opacity-100">
+          <div
+            className="absolute inset-0 bg-[#171715]/75 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-[#F3F0E8] p-8 pt-16 shadow-2xl transition-transform duration-300 overflow-y-auto translate-x-0">
+            <div className="flex items-center justify-between border-b border-[#171715]/10 pb-4">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-[#D94A38] font-bold">
+                  Table of Contents
+                </span>
+                <h3 className="font-serif text-xl font-bold text-[#171715]">
+                  Ubaid&apos;s Portfolio Explainer
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="rounded-sm bg-[#171715] p-2 text-white hover:bg-[#D94A38]"
+                aria-label="Close menu"
+              >
+                <X size={16} />
+              </button>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="rounded-sm bg-[#171715] p-2 text-white hover:bg-[#D94A38]"
-              aria-label="Close menu"
-            >
-              <X size={16} />
-            </button>
-          </div>
 
-          <div className="mt-6 space-y-1">
-            {CHAPTER_LABELS.map((chapter, index) => {
-              const isActive = activeChapter === index;
-              return (
-                <button
-                  key={chapter.number}
-                  onClick={() => scrollToChapter(index)}
-                  className={`flex w-full items-center justify-between rounded-sm px-3.5 py-2.5 text-left transition-all ${
-                    isActive
-                      ? 'bg-[#171715] text-[#FFFDF7] font-semibold'
-                      : 'hover:bg-[#171715]/5 text-[#171715]'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#F7E84B]' : 'text-[#77746D]'}`}>
-                      {chapter.number}
-                    </span>
-                    <span className="text-sm font-sans tracking-wide">
-                      {chapter.title}
-                    </span>
-                  </div>
-                  {isActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#D94A38]" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
+            <div className="mt-6 space-y-1">
+              {CHAPTER_LABELS.map((chapter, index) => {
+                const isActive = activeChapter === index;
+                return (
+                  <button
+                    key={chapter.number}
+                    onClick={() => scrollToChapter(index)}
+                    className={`flex w-full items-center justify-between rounded-sm px-3.5 py-2.5 text-left transition-all ${
+                      isActive
+                        ? 'bg-[#171715] text-[#FFFDF7] font-semibold'
+                        : 'hover:bg-[#171715]/5 text-[#171715]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#F7E84B]' : 'text-[#77746D]'}`}>
+                        {chapter.number}
+                      </span>
+                      <span className="text-sm font-sans tracking-wide">
+                        {chapter.title}
+                      </span>
+                    </div>
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#D94A38]" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
 
-          <div className="mt-8 rounded-sm bg-[#FFFDF7] p-5 border border-[#171715]/10 shadow-sm">
-            <span className="font-mono text-[9px] uppercase tracking-widest text-[#D94A38] font-bold">
-              Direct Contact
-            </span>
-            <p className="mt-1 font-serif text-sm font-semibold text-[#171715]">
-              Looking to hire for a freelance project?
-            </p>
-            <button
-              onClick={scrollToContact}
-              className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-sm bg-[#171715] py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white hover:bg-[#D94A38] transition-colors"
-            >
-              Discuss a Project
-              <ArrowUpRight size={14} />
-            </button>
-          </div>
+            <div className="mt-8 rounded-sm bg-[#FFFDF7] p-5 border border-[#171715]/10 shadow-sm">
+              <span className="font-mono text-[9px] uppercase tracking-widest text-[#D94A38] font-bold">
+                Direct Contact
+              </span>
+              <p className="mt-1 font-serif text-sm font-semibold text-[#171715]">
+                Looking to hire for a freelance project?
+              </p>
+              <button
+                onClick={scrollToContact}
+                className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-sm bg-[#D94A38] py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white hover:bg-[#b83827] transition-colors"
+              >
+                Discuss a Project
+                <ArrowUpRight size={14} />
+              </button>
 
-          <div className="mt-8 border-t border-[#171715]/10 pt-4 flex items-center justify-between text-[#77746D]">
-            <span className="font-mono text-[10px] uppercase tracking-widest">
-              Varanasi, UP, India
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-widest">
-              MCA Developer
-            </span>
+              <div className="mt-4 pt-3 border-t border-[#171715]/10 flex flex-wrap gap-3 font-mono text-[11px]">
+                <a href="https://wa.me/918090507639" target="_blank" rel="noopener noreferrer" className="text-[#128C7E] font-bold hover:underline">
+                  WhatsApp: 8090507639
+                </a>
+                <a href="mailto:mdubaid8090@gmail.com" className="text-[#171715] hover:text-[#D94A38] hover:underline">
+                  mdubaid8090@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3 text-xs font-mono text-[#77746D]">
+              <a href="https://github.com/ubaid0542" target="_blank" rel="noopener noreferrer" className="hover:text-[#171715] hover:underline">
+                GitHub ↗
+              </a>
+              <a href="https://www.linkedin.com/in/mdubaid8090" target="_blank" rel="noopener noreferrer" className="hover:text-[#0A66C2] hover:underline">
+                LinkedIn ↗
+              </a>
+              <a href="https://instagram.com/ubaidkhan__01" target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] hover:underline">
+                Instagram ↗
+              </a>
+            </div>
+
+            <div className="mt-6 border-t border-[#171715]/10 pt-4 flex items-center justify-between text-[#77746D]">
+              <span className="font-mono text-[10px] uppercase tracking-widest">
+                Varanasi, UP, India
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-widest font-semibold text-[#D94A38]">
+                MCA Developer
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -23,49 +23,51 @@ export default function OpeningChapter() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.2 });
+      // Crisp entrance animation without fractional scale distortion
+      const tl = gsap.timeline({ delay: 0.15 });
 
       tl.fromTo(
         paperRef.current,
-        { opacity: 0, y: 50, scale: 0.96, rotateZ: -1.5 },
-        { opacity: 1, y: 0, scale: 1, rotateZ: 0, duration: 1.1, ease: 'power3.out' }
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }
       )
         .fromTo(
           stampRef.current,
-          { opacity: 0, scale: 1.4, rotateZ: 12 },
-          { opacity: 1, scale: 1, rotateZ: 3, duration: 0.5, ease: 'back.out(1.7)' },
-          0.4
+          { opacity: 0, scale: 1.15, rotateZ: 8 },
+          { opacity: 1, scale: 1, rotateZ: 2, duration: 0.45, ease: 'back.out(1.5)' },
+          0.3
         )
         .fromTo(
           headlineRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-          0.6
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+          0.45
         )
         .fromTo(
           tagListRef.current?.children || [],
           { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power2.out' },
-          0.8
+          { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power2.out' },
+          0.65
         )
         .fromTo(
           ctaGroupRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-          1.0
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+          0.85
         );
 
-      // Scroll-driven camera parallax
+      // Clean vertical translation only (NO fractional scale or rotation)
+      // This completely prevents GPU texture interpolation and text blurring when scrolling up and down
       gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1.2,
+          scrub: 1,
         },
       })
-        .to(paperRef.current, { y: -100, scale: 0.94, opacity: 0.25, rotateZ: -1 })
-        .to(stampRef.current, { y: -60, rotateZ: 8 }, 0);
+        .to(paperRef.current, { y: -80, ease: 'none' })
+        .to(stampRef.current, { y: -50, ease: 'none' }, 0);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -86,6 +88,11 @@ export default function OpeningChapter() {
       ref={sectionRef}
       data-chapter="0"
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F3F0E8] px-4 pt-20 pb-16 md:px-8"
+      style={{
+        transform: 'translate3d(0, 0, 0)',
+        backfaceVisibility: 'hidden',
+        WebkitFontSmoothing: 'antialiased',
+      }}
     >
       {/* Background paper texture & grain */}
       <div
@@ -99,7 +106,13 @@ export default function OpeningChapter() {
       <div className="relative mx-auto w-full max-w-4xl">
         <div
           ref={paperRef}
-          className="relative rounded-sm bg-[#FFFDF7] p-8 md:p-14 lg:p-16 shadow-[6px_10px_35px_rgba(23,23,21,0.09)] border border-[#171715]/10"
+          className="relative rounded-sm bg-[#FFFDF7] p-8 md:p-14 lg:p-16 shadow-[4px_8px_30px_rgba(23,23,21,0.08)] border border-[#171715]/10"
+          style={{
+            transform: 'translate3d(0, 0, 0)',
+            backfaceVisibility: 'hidden',
+            WebkitFontSmoothing: 'antialiased',
+            textRendering: 'optimizeLegibility',
+          }}
         >
           {/* Masking tape on top center */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20">
@@ -132,6 +145,7 @@ export default function OpeningChapter() {
             <div
               ref={stampRef}
               className="inline-flex items-center gap-2 rounded-sm border-2 border-dashed border-[#D94A38] bg-[#FFF5F5] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#D94A38] shadow-sm"
+              style={{ transform: 'rotate(2deg)' }}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#D94A38]" />
               Available for Freelance Projects
