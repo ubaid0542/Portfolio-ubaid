@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --paper-warm: #F3F0E8;
+  --dark-ink: #171715;
+  --paper-white: #FFFDF7;
+  --highlighter-yellow: #F7E84B;
+  --editorial-red: #D94A38;
+  --muted-ink: #77746D;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--paper-warm);
+  color: var(--dark-ink);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background-color: #F7E84B;
+  color: #171715;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F0E8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4CFC2;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8B0A0;
+}
+
+/* Print/Editorial styling details */
+.paper-shadow {
+  box-shadow: 4px 6px 24px rgba(23, 23, 21, 0.06), 0 1px 3px rgba(23, 23, 21, 0.04);
+}
+
+.tape-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
