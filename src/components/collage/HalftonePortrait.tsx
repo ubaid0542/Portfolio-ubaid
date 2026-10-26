@@ -20,7 +20,7 @@ const HalftonePortrait = forwardRef<HTMLDivElement, HalftonePortraitProps>(
           {/* Irregular white border simulation */}
           <div className="relative overflow-hidden" style={{ clipPath: 'polygon(1% 0%, 99% 1%, 100% 98%, 2% 100%)' }}>
             {/* The portrait image with halftone-like treatment */}
-            <div className="relative aspect-[3/4] w-full overflow-hidden">
+            <div className="relative aspect-[3/4] w-full overflow-hidden" style={{ position: 'relative' }}>
               <Image
                 src={src}
                 alt={alt}

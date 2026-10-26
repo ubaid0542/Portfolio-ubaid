@@ -154,7 +154,7 @@ export default function RevwriteAIChapter() {
         {/* Screenshot */}
         <div ref={screenshotRef} className="relative mx-auto mt-12 max-w-3xl">
           <div className="relative overflow-hidden rounded-sm bg-[#F3F0E8] p-3 shadow-[4px_6px_20px_rgba(0,0,0,0.08)]">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#1a1a18]">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#1a1a18]" style={{ position: 'relative' }}>
               <Image
                 src="/images/adgenai-project.png"
                 alt="RevwriteAI product interface showing AI-powered review generation"

@@ -93,7 +93,7 @@ export default function OtherProjectsChapter() {
                   {/* Screenshot */}
                   <div className={`relative ${i % 2 !== 0 ? 'md:col-start-2' : ''}`}>
                     <div className="relative overflow-hidden rounded-sm bg-[#FFFDF7] p-3 shadow-[4px_6px_20px_rgba(0,0,0,0.08)]">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#1a1a18]">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#1a1a18]" style={{ position: 'relative' }}>
                         <Image
                           src={project.image}
                           alt={`${project.title} — ${project.description}`}

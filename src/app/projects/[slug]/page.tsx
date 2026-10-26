@@ -104,7 +104,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
         {/* Project Image */}
         <div className="relative mt-12 rounded-sm bg-[#FFFDF7] p-4 shadow-[4px_6px_24px_rgba(0,0,0,0.06)] border border-[#171715]/5">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#171715]">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-[#171715]" style={{ position: 'relative' }}>
             <Image
               src={project.image}
               alt={project.title}
