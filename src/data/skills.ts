@@ -61,45 +61,4 @@ export const skillCategories: SkillCategory[] = [
   },
 ];
 
-export const processSteps = [
-  {
-    number: '01',
-    phase: 'DISCOVERY',
-    title: 'Understand the Mission',
-    timeline: 'Day 1 — 2',
-    description: 'We deconstruct business goals, audience expectations, competitors, and functional requirements. Every design decision starts with a clear objective.',
-    deliverable: 'Project scope blueprint & interactive brief',
-  },
-  {
-    number: '02',
-    phase: 'ARCHITECTURE',
-    title: 'Structure & Flow',
-    timeline: 'Day 3 — 5',
-    description: 'Establish information hierarchy, URL structure, wireframes, and responsive layout foundations. Ensures frictionless navigation on all screen sizes.',
-    deliverable: 'Wireframes, content outline & sitemap',
-  },
-  {
-    number: '03',
-    phase: 'INTERACTION',
-    title: 'Design & Motion Language',
-    timeline: 'Day 6 — 9',
-    description: 'Design custom visual direction, typography hierarchy, tactile textures, and choreographed GSAP scroll transitions that elevate brand prestige.',
-    deliverable: 'Fidelity visual system & motion prototypes',
-  },
-  {
-    number: '04',
-    phase: 'ENGINEERING',
-    title: 'Develop & Connect',
-    timeline: 'Day 10 — 14',
-    description: 'Build modular React/Next.js components, integrate dynamic content, hook up APIs, and implement bulletproof TypeScript code.',
-    deliverable: 'Working staging site with live testing',
-  },
-  {
-    number: '05',
-    phase: 'DELIVERY',
-    title: 'Refine, Test & Launch',
-    timeline: 'Day 15 — 16',
-    description: 'Perform cross-browser QA, mobile responsiveness audit, Core Web Vitals optimization, semantic SEO markup, and Vercel edge deployment.',
-    deliverable: 'Production launch with zero-defect guarantee',
-  },
-];
+export { processSteps } from './process';
