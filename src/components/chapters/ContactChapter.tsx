@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ChapterHeading from '@/components/motion/ChapterHeading';
 import { profile } from '@/data/profile';
-import { Mail, Linkedin, Github, MessageSquare, ArrowUpRight, CheckCircle2, Sparkles, Phone, Instagram } from 'lucide-react';
+import { Mail, Linkedin, Github, MessageSquare, ArrowUpRight, CheckCircle2, Sparkles, Phone, Instagram, Loader2, Send, Check } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -23,7 +23,9 @@ export default function ContactChapter() {
     budget: '$500 — $2,000 / ₹40k — ₹1.5L',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'fallback'>('idle');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [copiedNotice, setCopiedNotice] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,16 +72,46 @@ export default function ContactChapter() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formState.email || !formState.message) return;
 
-    const subject = encodeURIComponent(`[Freelance Inquiry] ${formState.projectType} from ${formState.name || 'Client'}`);
-    const body = encodeURIComponent(
-      `Name: ${formState.name}\nEmail: ${formState.email}\nProject Type: ${formState.projectType}\nEstimated Scope/Budget: ${formState.budget}\n\nProject Details:\n${formState.message}`
-    );
-    window.location.href = `mailto:${profile.social.email}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmittedEmail(formState.email);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+      } else {
+        // Fallback: Opens mail app if direct SMTP is not yet configured with an App Password
+        const subject = encodeURIComponent(`[Freelance Inquiry] ${formState.projectType} from ${formState.name || 'Client'}`);
+        const body = encodeURIComponent(
+          `Name: ${formState.name}\nEmail: ${formState.email}\nProject Type: ${formState.projectType}\nEstimated Scope/Budget: ${formState.budget}\n\nProject Details:\n${formState.message}`
+        );
+        window.location.href = `mailto:${profile.social.email}?subject=${subject}&body=${body}`;
+        setSubmitStatus('fallback');
+      }
+    } catch (err) {
+      console.warn('API error, triggering email client fallback:', err);
+      const subject = encodeURIComponent(`[Freelance Inquiry] ${formState.projectType} from ${formState.name || 'Client'}`);
+      const body = encodeURIComponent(
+        `Name: ${formState.name}\nEmail: ${formState.email}\nProject Type: ${formState.projectType}\nEstimated Scope/Budget: ${formState.budget}\n\nProject Details:\n${formState.message}`
+      );
+      window.location.href = `mailto:${profile.social.email}?subject=${subject}&body=${body}`;
+      setSubmitStatus('fallback');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const openWhatsApp = () => {
@@ -208,8 +240,48 @@ export default function ContactChapter() {
               </span>
             </div>
 
-            {submitted ? (
-              <div className="mt-8 rounded-sm bg-[#F3F0E8] p-8 text-center border border-[#171715]/10">
+            {submitStatus === 'success' ? (
+              <div className="mt-8 rounded-sm bg-[#F3F0E8] p-8 text-center border border-[#171715]/10 animate-in fade-in duration-300">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-3 shadow-sm">
+                  <CheckCircle2 size={32} />
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+                  Email Dispatched Successfully ✓
+                </span>
+                <h4 className="mt-3 font-serif text-2xl font-bold text-[#171715]">
+                  Inquiry Received & Both Parties Notified!
+                </h4>
+                <p className="mt-2 text-sm text-[#4A4843] max-w-md mx-auto leading-relaxed">
+                  1. A detailed project alert was sent to Ubaid (<strong className="text-[#171715]">{profile.social.email}</strong>).<br />
+                  2. A confirmation email was sent to your inbox (<strong className="text-[#171715]">{submittedEmail}</strong>).
+                </p>
+                <p className="mt-3 text-xs text-[#77746D]">
+                  Expect a personal response within <strong>2 to 4 hours</strong>.
+                </p>
+
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    onClick={() => {
+                      setSubmitStatus('idle');
+                      setFormState({ name: '', email: '', projectType: 'Real Estate Website', budget: 'Flexible / Exploring Options', message: '' });
+                    }}
+                    className="rounded-sm bg-[#171715] px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-white hover:bg-[#D94A38] transition-colors"
+                  >
+                    ← Send Another Inquiry
+                  </button>
+                  <a
+                    href={profile.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-sm bg-[#128C7E] px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-white hover:bg-[#0e6e63] transition-colors"
+                  >
+                    <MessageSquare size={13} />
+                    WhatsApp Quick Chat
+                  </a>
+                </div>
+              </div>
+            ) : submitStatus === 'fallback' ? (
+              <div className="mt-8 rounded-sm bg-[#F3F0E8] p-8 text-center border border-[#171715]/10 animate-in fade-in duration-300">
                 <CheckCircle2 size={36} className="mx-auto text-[#D94A38]" />
                 <h4 className="mt-3 font-serif text-xl font-bold text-[#171715]">
                   Launching Your Email Client...
@@ -221,7 +293,7 @@ export default function ContactChapter() {
                   {profile.social.email}
                 </div>
                 <button
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => setSubmitStatus('idle')}
                   className="mt-6 font-mono text-xs uppercase tracking-wider text-[#D94A38] hover:underline"
                 >
                   ← Edit or Draft Another Inquiry
@@ -318,12 +390,23 @@ export default function ContactChapter() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full rounded-sm bg-[#171715] py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-[#FFFDF7] transition-all hover:bg-[#D94A38] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D94A38]"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 rounded-sm bg-[#171715] py-3.5 font-mono text-xs font-bold uppercase tracking-widest text-[#FFFDF7] transition-all hover:bg-[#D94A38] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D94A38] disabled:opacity-75 disabled:cursor-not-allowed"
                   >
-                    Draft Project Inquiry Email →
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin text-[#F7E84B]" />
+                        <span>Dispatching Automated Emails...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={13} />
+                        <span>Send Project Inquiry (Automated Alert) →</span>
+                      </>
+                    )}
                   </button>
                   <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-wider text-[#77746D]">
-                    Opens your prefilled mail application with no hidden third-party tracking
+                    Automated confirmation sent to your inbox + instant alert to Ubaid
                   </p>
                 </div>
               </form>
