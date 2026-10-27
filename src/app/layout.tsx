@@ -3,6 +3,8 @@ import './globals.css';
 import { profile } from '@/data/profile';
 import Navigation from '@/components/navigation/Navigation';
 import Footer from '@/components/navigation/Footer';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
@@ -142,6 +144,8 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
