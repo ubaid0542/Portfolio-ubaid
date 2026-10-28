@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, Georgia, serif;
+  --font-serif: var(--font-bodoni), "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
 }
 
 :root {
@@ -11,14 +11,14 @@
   --highlighter-yellow: #F7E84B;
   --editorial-red: #D94A38;
   --muted-ink: #77746D;
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, Georgia, serif;
+  --font-serif: var(--font-bodoni), "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
 }
 
-/* Luxury Editorial Typography with Cormorant Garamond */
+/* High-Fashion Editorial Typography with Bodoni Moda */
 .font-serif,
 h1, h2, h3, h4, h5, h6,
 .chapter-title {
-  font-family: var(--font-cormorant), "Cormorant Garamond", Garamond, Georgia, serif;
+  font-family: var(--font-bodoni), "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
 }
 
 html {

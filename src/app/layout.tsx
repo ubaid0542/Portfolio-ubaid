@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond } from 'next/font/google';
+import { Bodoni_Moda } from 'next/font/google';
 import './globals.css';
 import { profile } from '@/data/profile';
 import Navigation from '@/components/navigation/Navigation';
@@ -7,11 +7,10 @@ import Footer from '@/components/navigation/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-const cormorant = Cormorant_Garamond({
+const bodoni = Bodoni_Moda({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-cormorant',
+  variable: '--font-bodoni',
   display: 'swap',
 });
 
@@ -136,7 +135,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={cormorant.variable}>
+    <html lang="en" className={bodoni.variable}>
       <head>
         <script
           type="application/ld+json"
@@ -147,7 +146,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className={`${cormorant.variable} min-h-screen bg-[#F3F0E8] text-[#171715] antialiased selection:bg-[#F7E84B] selection:text-[#171715]`}>
+      <body className={`${bodoni.variable} min-h-screen bg-[#F3F0E8] text-[#171715] antialiased selection:bg-[#F7E84B] selection:text-[#171715]`}>
         <Navigation />
         <main id="main-content">
           {children}

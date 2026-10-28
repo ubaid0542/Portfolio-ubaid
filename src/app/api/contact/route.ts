@@ -146,7 +146,7 @@ export async function POST(request: Request) {
             .whatsapp-box { background-color: #E8F5E9; border-left: 3px solid #128C7E; padding: 14px 16px; border-radius: 2px; font-size: 13px; color: #1B5E20; margin-top: 22px; }
             .whatsapp-link { color: #128C7E; font-weight: bold; text-decoration: none; }
             .footer { font-size: 11px; color: #77746D; margin-top: 28px; border-top: 1px solid #ECE7D9; padding-top: 16px; text-align: center; }
-            .signature { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 21px; font-style: italic; color: #171715; margin-top: 20px; }
+            .signature { font-family: 'Bodoni Moda', Georgia, serif; font-size: 21px; font-style: italic; color: #171715; margin-top: 20px; }
           </style>
         </head>
         <body>
