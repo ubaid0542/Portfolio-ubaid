@@ -587,7 +587,7 @@ export default function ContactChapter() {
                 I believe great web development comes from the intersection of solid CS fundamentals (MCA graduate) and creative storytelling. Let&apos;s build an experience that sets your business apart.
               </p>
               <div className="mt-4 pt-3 border-t border-[#171715]/10 flex items-center justify-between">
-                <span className="font-serif italic text-lg text-[#171715]" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="font-serif italic text-xl text-[#171715]">
                   — Ubaid
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#77746D]">
